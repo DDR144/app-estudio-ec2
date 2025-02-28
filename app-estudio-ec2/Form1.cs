@@ -46,19 +46,26 @@ namespace app_estudio_ec2
 
         private void btnQuitar_Click(object sender, EventArgs e)
         {
-            int seleccion = lstNombres.SelectedIndex;
-            lstNombres.Items.RemoveAt(seleccion);
-            lstNota1.Items.RemoveAt(seleccion);
-            lstNota2.Items.RemoveAt(seleccion);
-            lstNota3.Items.RemoveAt(seleccion);
-            lstPromedio.Items.RemoveAt(seleccion);
-
-            int total = 0;
-            for (int i = 0; i < lstPromedio.Items.Count; i++)
+            try
             {
-                total += Convert.ToInt32(lstPromedio.Items[i]);
+                int seleccion = lstNombres.SelectedIndex;
+                lstNombres.Items.RemoveAt(seleccion);
+                lstNota1.Items.RemoveAt(seleccion);
+                lstNota2.Items.RemoveAt(seleccion);
+                lstNota3.Items.RemoveAt(seleccion);
+                lstPromedio.Items.RemoveAt(seleccion);
+
+                int total = 0;
+                for (int i = 0; i < lstPromedio.Items.Count; i++)
+                {
+                    total += Convert.ToInt32(lstPromedio.Items[i]);
+                }
+                txtPromedio.Text = total.ToString();
             }
-            txtPromedio.Text = total.ToString();
+            catch 
+            {
+                MessageBox.Show("Debe seleccionar un nombre", "Error");
+            }
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
@@ -73,25 +80,35 @@ namespace app_estudio_ec2
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            nota1 = Convert.ToInt32(txtNota1.Text);
-            nota2 = Convert.ToInt32(txtNota2.Text);
-            nota3 = Convert.ToInt32(txtNota3.Text);    
-            nombre = txtNombre.Text;
-            promedio = (nota1 + nota2 + nota3) / 3;
-
-            
-            lstNota1.Items.Add(nota1);
-            lstNota2.Items.Add(nota2);
-            lstNota3.Items.Add(nota3);
-            lstNombres.Items.Add(nombre);
-            lstPromedio.Items.Add(promedio);
-
-            int total = 0;
-            for (int i = 0; i < lstPromedio.Items.Count; i++)
+            if (txtNombre.Text == "" || txtNota1.Text == "" || txtNota2.Text == "" || txtNota3.Text == "")
             {
-                total += Convert.ToInt32(lstPromedio.Items[i]);
+                MessageBox.Show("Llena todos los campos, por favor", "Error");
             }
-            txtPromedio.Text = total.ToString();
+            try
+            {
+                nota1 = Convert.ToInt32(txtNota1.Text);
+                nota2 = Convert.ToInt32(txtNota2.Text);
+                nota3 = Convert.ToInt32(txtNota3.Text);
+                nombre = txtNombre.Text;
+                promedio = (nota1 + nota2 + nota3) / 3;
+
+                lstNota1.Items.Add(nota1);
+                lstNota2.Items.Add(nota2);
+                lstNota3.Items.Add(nota3);
+                lstNombres.Items.Add(nombre);
+                lstPromedio.Items.Add(promedio);
+
+                int total = 0;
+                for (int i = 0; i < lstPromedio.Items.Count; i++)
+                {
+                    total += Convert.ToInt32(lstPromedio.Items[i]);
+                }
+                txtPromedio.Text = total.ToString();
+            }
+            catch 
+            {
+                MessageBox.Show("Las notas deben ser numeros enteros", "Error");
+            }
             
         }
 
